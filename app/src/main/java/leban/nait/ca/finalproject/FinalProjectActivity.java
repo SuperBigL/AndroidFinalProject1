@@ -11,20 +11,39 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.DigitalClock;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextClock;
 
 import java.util.Date;
+import java.util.zip.CRC32;
 
 public class FinalProjectActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    Chronometer chrono;
+    TextClock clock;
+    Button startButton, passButton, pauseButton, stopButton, caloriesButton, timesButton, stepsButton, finishButton;
+    boolean resume = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_final_project);
-        EditText weight = (EditText)findViewById(R.id.dayweight);
-        Button submit = (Button)findViewById(R.id.submit);
-        submit.setOnClickListener(this);
+        clock = (TextClock) findViewById(R.id.currenttime);
+        startButton = (Button) findViewById(R.id.startbutton);
+        passButton = (Button) findViewById(R.id.passoff);
+        pauseButton = (Button) findViewById(R.id.pausebutton);
+        stopButton = (Button) findViewById(R.id.stopbutton);
+        caloriesButton = (Button) findViewById(R.id.viewbycalories);
+        timesButton = (Button) findViewById(R.id.viewbytime);
+        stepsButton = (Button) findViewById(R.id.viewbysteps);
+        finishButton = (Button) findViewById(R.id.finishbutton);
+
+        caloriesButton.setEnabled(false);
+        timesButton.setEnabled(false);
+        stepsButton.setEnabled(false);
+        finishButton.setEnabled(false);
 
 
 

@@ -20,8 +20,7 @@
         android:layout_alignParentTop="true" />
 
 
-
-    <DigitalClock
+    <TextClock
      android:id="@+id/currenttime"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
@@ -39,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chrono"
+        android:paddingTop="50dp"
         android:layout_below="@id/chronotext"/>
 
 
@@ -48,7 +48,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/startbutton"
         android:text="Start"
-        android:layout_below="@id/chrono"/>
+        android:layout_below="@id/chrono"
+        android:onClick="onClick" />
 
     <Button
         android:layout_width="wrap_content"
@@ -56,9 +57,79 @@
         android:id="@+id/resetbutton"
         android:text="Reset"
         android:layout_toRightOf="@id/startbutton"
+        android:onClick="onClick"
         android:layout_below="@id/chrono"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stopbutton"
+        android:text="Stop"
+        android:onClick="onClick"
+        android:layout_below="@id/startbutton" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pausebutton"
+        android:text="Pause Button"
+        android:layout_toRightOf="@id/resetbutton"
+        android:onClick="onClick"
+        android:layout_below="@id/chrono" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/passoff"
+        android:text="Pass off the Batton"
+        android:layout_below="@id/startbutton"
+        android:onClick="onClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/finishbutton"
+        android:text="Finish"
+        android:layout_toRightOf="@id/passoff"
+        android:layout_below="@id/startbutton" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Results by"
+        android:layout_below="@id/passoff"
+        android:id="@+id/resultstext"
+        android:textAlignment="gravity"
+        android:paddingTop="100dp" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewbycalories"
+        android:text="Calories"
+        android:layout_below="@id/resultstext"
+        android:layout_toRightOf="@id/viewbycalories"
+        android:onClick="onClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewbytime"
+        android:text="Time"
+        android:layout_toRightOf="@id/viewbycalories"
+        android:layout_below="@id/resultstext"
+        android:onClick="onClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewbysteps"
+        android:text="Steps Made"
+        android:layout_toRightOf="@id/viewbytime"
+        android:layout_below="@id/resultstext"
+        android:onClick="onClick" />
 
 
 </RelativeLayout>
