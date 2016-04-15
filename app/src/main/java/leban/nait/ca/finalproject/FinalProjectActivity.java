@@ -1,6 +1,9 @@
 package leban.nait.ca.finalproject;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,19 +15,34 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.DatePicker;
 import android.widget.DigitalClock;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextClock;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.zip.CRC32;
 
 public class FinalProjectActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    DateFormat formatter;
     Chronometer chrono;
     TextClock clock;
     Button startButton, passButton, pauseButton, stopButton, caloriesButton, timesButton, stepsButton, finishButton;
-    boolean resume = false;
+    boolean resume = false, finalLap = false, finished = false;
+    TextView currentDate, timeElapsed;
+    Calendar c = Calendar.getInstance();
+    ListView laps;
+    String runner1 = RegisterPlayersActivity.runner1;
+    String runner2 = RegisterPlayersActivity.runner2;
+    String runner3 = RegisterPlayersActivity.runner3;
+    String runner4 = RegisterPlayersActivity.runner4;
+    String runner5 = RegisterPlayersActivity.runner5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +57,9 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         timesButton = (Button) findViewById(R.id.viewbytime);
         stepsButton = (Button) findViewById(R.id.viewbysteps);
         finishButton = (Button) findViewById(R.id.finishbutton);
-
+        currentDate = (TextView) findViewById(R.id.dateAndTime);
+        timeElapsed = (TextView) findViewById(R.id.chronotext);
+        laps = (ListView) findViewById(R.id.laps);
         caloriesButton.setEnabled(false);
         timesButton.setEnabled(false);
         stepsButton.setEnabled(false);
@@ -49,6 +69,31 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
 
     }
+
+    private void updateLabel() {
+        currentDate.setText(formatter.format(c.getTime()));
+    }
+
+
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, monthOfYear);
+            c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+    };
+
+
+    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            c.set(Calendar.MINUTE, minute);
+            updateLabel();
+        }
+    };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,6 +120,26 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v)
     {
+        switch (v.getId()) {
+            case R.id.startbutton: {
+                startButton.setEnabled(false);
+                stopButton.setEnabled(true);
+                if (!resume) {
+                    chrono.setBase(SystemClock.elapsedRealtime());
+                }
+                chrono.start();
+                break;
+            }
+
+            case R.id.stopbutton: {
+                startButton.setEnabled(true);
+                stopButton.setEnabled(false);
+                chrono.stop();
+                resume = true;
+                break;
+            }
+
+        }
 
     }
 
