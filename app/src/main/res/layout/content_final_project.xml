@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,30 +13,52 @@
     tools:showIn="@layout/main"
     android:orientation="vertical">
 
-    <CalendarView
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/dateAndTime"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:minDate="1451606400"
-        android:id="@+id/currentday"></CalendarView>
+        android:layout_alignParentTop="true" />
+
+
+
+    <DigitalClock
+     android:id="@+id/currenttime"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_gravity="center"
+        android:layout_below="@id/dateAndTime"/>
 
     <TextView
+        android:id="@+id/chronotext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter your weight" />
+        android:text="Time Elapsed"
+        android:layout_below="@id/currenttime"/>
 
-    <EditText
+    <Chronometer
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dayweight"
-        />
+        android:id="@+id/chrono"
+        android:layout_below="@id/chronotext"/>
+
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/submit"
-        android:text="Submit"/>
+        android:id="@+id/startbutton"
+        android:text="Start"
+        android:layout_below="@id/chrono"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resetbutton"
+        android:text="Reset"
+        android:layout_toRightOf="@id/startbutton"
+        android:layout_below="@id/chrono"/>
 
 
 
 
-</LinearLayout>
+</RelativeLayout>
