@@ -37,12 +37,12 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     boolean resume = false, finalLap = false, finished = false;
     TextView currentDate, timeElapsed;
     Calendar c = Calendar.getInstance();
-    ListView laps;
-    String runner1 = RegisterPlayersActivity.runner1;
-    String runner2 = RegisterPlayersActivity.runner2;
-    String runner3 = RegisterPlayersActivity.runner3;
-    String runner4 = RegisterPlayersActivity.runner4;
-    String runner5 = RegisterPlayersActivity.runner5;
+    String[] theLaps = new String[4];
+    ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, theLaps);
+    ListView lap;
+    Team team = new Team();
+    int lapsCount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +59,17 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         finishButton = (Button) findViewById(R.id.finishbutton);
         currentDate = (TextView) findViewById(R.id.dateAndTime);
         timeElapsed = (TextView) findViewById(R.id.chronotext);
-        laps = (ListView) findViewById(R.id.laps);
+        Button distanceButton = (Button) findViewById(R.id.viewbydistance);
+        lap = (ListView) findViewById(R.id.laps);
         caloriesButton.setEnabled(false);
         timesButton.setEnabled(false);
         stepsButton.setEnabled(false);
+        distanceButton.setEnabled(false);
         finishButton.setEnabled(false);
+
+        stopButton.setEnabled(false);
+        pauseButton.setEnabled(false);
+        passButton.setEnabled(false);
 
 
 
@@ -124,6 +130,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
             case R.id.startbutton: {
                 startButton.setEnabled(false);
                 stopButton.setEnabled(true);
+                pauseButton.setEnabled(true);
+                passButton.setEnabled(true);
                 if (!resume) {
                     chrono.setBase(SystemClock.elapsedRealtime());
                 }
@@ -131,12 +139,53 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 break;
             }
 
+            case R.id.pausebutton: {
+                startButton.setEnabled(true);
+                stopButton.setEnabled(false);
+                passButton.setEnabled(false);
+                pauseButton.setEnabled(false);
+                chrono.stop();
+
+
+            }
+
             case R.id.stopbutton: {
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
+                pauseButton.setEnabled(false);
                 chrono.stop();
                 resume = true;
                 break;
+            }
+
+            case R.id.passoff: {
+                chrono.stop();
+                long timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
+                team.getRunnerName(lapsCount);
+                team.setRunnerTime(lapsCount, timeElapsed);
+                chrono.setText("00:00");
+                chrono.start();
+                resume = false;
+                startButton.setEnabled(true);
+                stopButton.setEnabled(true);
+                lapsCount++;
+                int runnerCount = team.getTeamSize();
+                if (lapsCount == runnerCount) {
+                    finalLap = true;
+                    finishButton.setEnabled(true);
+                    passButton.setEnabled(false);
+                }
+
+                break;
+            }
+
+            case R.id.finishbutton: {
+                chrono.stop();
+                long timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
+                team.getRunnerName(lapsCount);
+                team.setRunnerTime(lapsCount, timeElapsed);
+                chrono.setText("00:00");
+
             }
 
         }

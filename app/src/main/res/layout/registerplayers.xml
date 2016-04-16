@@ -54,4 +54,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/runner5" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:id="@+id/submitrunners" />
+
 </LinearLayout>

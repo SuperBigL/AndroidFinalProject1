@@ -13,6 +13,7 @@
     tools:showIn="@layout/main"
     android:orientation="vertical">
 
+
     <TextView
         android:id="@+id/dateAndTime"
         android:layout_width="fill_parent"
@@ -122,6 +123,7 @@
         android:layout_below="@id/resultstext"
         android:onClick="onClick" />
 
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -130,6 +132,35 @@
         android:layout_toRightOf="@id/viewbytime"
         android:layout_below="@id/resultstext"
         android:onClick="onClick" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamsetup"
+        android:text="Team Setup"
+        android:layout_below="@id/viewbysteps" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewbydistance"
+        android:text="Distance"
+        android:layout_toRightOf="@id/viewbysteps"
+        android:layout_below="@id/resultstext" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/totaltime"
+        android:text="Total Time" />
+
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/laps"
+        android:layout_below="@id/viewbytime" />
 
 
 </RelativeLayout>
