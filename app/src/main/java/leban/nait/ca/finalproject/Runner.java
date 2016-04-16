@@ -29,7 +29,9 @@ public class Runner {
     public void setRunnerName(String runnerName) throws Exception {
         this.runnerName = runnerName;
         if (runnerName == null) {
-            throw new Exception("You need to input a runner name");
+            runnerName = null;
+            runnerNumber = 0;
+            runnerTime = 00;
         }
 
 

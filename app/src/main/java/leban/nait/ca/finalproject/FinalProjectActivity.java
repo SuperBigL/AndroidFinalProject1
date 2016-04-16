@@ -2,6 +2,7 @@ package leban.nait.ca.finalproject;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -33,7 +34,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     DateFormat formatter;
     Chronometer chrono;
     TextClock clock;
-    Button startButton, passButton, pauseButton, stopButton, caloriesButton, timesButton, stepsButton, finishButton;
+    Button startButton, passButton, pauseButton, stopButton, caloriesButton, timesButton, stepsButton, finishButton, distanceButton;
     boolean resume = false, finalLap = false, finished = false;
     TextView currentDate, timeElapsed;
     Calendar c = Calendar.getInstance();
@@ -59,7 +60,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         finishButton = (Button) findViewById(R.id.finishbutton);
         currentDate = (TextView) findViewById(R.id.dateAndTime);
         timeElapsed = (TextView) findViewById(R.id.chronotext);
-        Button distanceButton = (Button) findViewById(R.id.viewbydistance);
+        distanceButton = (Button) findViewById(R.id.viewbydistance);
         lap = (ListView) findViewById(R.id.laps);
         caloriesButton.setEnabled(false);
         timesButton.setEnabled(false);
@@ -163,11 +164,6 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 long timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
                 team.getRunnerName(lapsCount);
                 team.setRunnerTime(lapsCount, timeElapsed);
-                chrono.setText("00:00");
-                chrono.start();
-                resume = false;
-                startButton.setEnabled(true);
-                stopButton.setEnabled(true);
                 lapsCount++;
                 int runnerCount = team.getTeamSize();
                 if (lapsCount == runnerCount) {
@@ -175,6 +171,15 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                     finishButton.setEnabled(true);
                     passButton.setEnabled(false);
                 }
+
+
+                chrono.setText("00:00");
+                chrono.start();
+                resume = false;
+                startButton.setEnabled(false);
+                stopButton.setEnabled(true);
+                pauseButton.setEnabled(true);
+
 
                 break;
             }
@@ -185,8 +190,45 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 team.getRunnerName(lapsCount);
                 team.setRunnerTime(lapsCount, timeElapsed);
                 chrono.setText("00:00");
+                startButton.setEnabled(true);
+                stopButton.setEnabled(false);
+                pauseButton.setEnabled(false);
+                passButton.setEnabled(false);
+                finishButton.setEnabled(false);
+                stepsButton.setEnabled(true);
+                caloriesButton.setEnabled(true);
+                timesButton.setEnabled(true);
+                distanceButton.setEnabled(true);
+                break;
+
 
             }
+
+            case R.id.viewbytime: {
+                Intent intent = new Intent(this, TimesGraph.class);
+                this.startActivity(intent);
+                break;
+            }
+
+            case R.id.viewbydistance: {
+                Intent intent = new Intent(this, DistanceGraph.class);
+                this.startActivity(intent);
+                break;
+            }
+
+            case R.id.viewbysteps: {
+                Intent intent = new Intent(this, StepsGraph.class);
+                this.startActivity(intent);
+                break;
+            }
+
+            case R.id.viewbycalories: {
+                Intent intent = new Intent(this, CaloriesGraph.class);
+                this.startActivity(intent);
+                break;
+            }
+
+
 
         }
 
