@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * Created by Owner on 2016-04-15.
+ * Created by Leban Abduallahi Mohamed on 2016-04-15.
  */
 
 
@@ -31,6 +31,7 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
         reg.setOnClickListener(this);
 
     }
+
 
     @Override
     public void onClick(View v) {

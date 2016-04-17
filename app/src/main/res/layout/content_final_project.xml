@@ -94,12 +94,27 @@
         android:layout_toRightOf="@id/passoff"
         android:layout_below="@id/startbutton" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Steps Taken: "
+        android:id="@+id/countlabel"
+        android:layout_below="@id/passoff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stepcount"
+        android:layout_toRightOf="@id/countlabel"
+        android:layout_below="@id/passoff"
+        android:text="0" />
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Results by"
-        android:layout_below="@id/passoff"
+        android:layout_below="@id/countlabel"
         android:id="@+id/resultstext"
         android:textAlignment="gravity"
         android:paddingTop="100dp" />
