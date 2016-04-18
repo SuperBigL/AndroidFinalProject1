@@ -22,6 +22,7 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.registerplayers);
         runner1Name = (EditText) findViewById(R.id.runner1);
         runner2Name = (EditText) findViewById(R.id.runner2);
         runner3Name = (EditText) findViewById(R.id.runner3);
