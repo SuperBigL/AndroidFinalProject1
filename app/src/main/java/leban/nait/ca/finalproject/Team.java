@@ -32,9 +32,21 @@ public class Team {
         return name;
     }
 
-    public void setRunnerTime(int number, long time) {
+    public double getRunnerTime(int number) {
+        return runners[number].getRunnerTime();
+    }
+
+    public void setRunnerTime(int number, double time) {
         runners[number].setRunnerTime(time);
 
+    }
+
+    public double getRunnerSteps(int number) {
+        return runners[number].getRunnerSteps();
+    }
+
+    public void setRunnerSteps(int number, double steps) {
+        runners[number].setRunnerSteps(steps);
     }
 
 

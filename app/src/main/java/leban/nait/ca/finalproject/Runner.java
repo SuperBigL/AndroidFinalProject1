@@ -8,9 +8,10 @@ public class Runner {
 
     private int runnerNumber;
     private String runnerName;
+    private double runnerSteps;
 
+    private double runnerTime;
 
-    private long runnerTime;
 
 
     public int getRunnerNumber() {
@@ -37,12 +38,21 @@ public class Runner {
 
     }
 
-    public long getRunnerTime() {
+    public double getRunnerTime() {
         return runnerTime;
     }
 
-    public void setRunnerTime(long runnerTime) {
+    public void setRunnerTime(double runnerTime) {
         this.runnerTime = runnerTime;
+    }
+
+    public double getRunnerSteps() {
+        return runnerSteps;
+    }
+
+
+    public void setRunnerSteps(double runnerSteps) {
+        this.runnerSteps = runnerSteps;
     }
 
 

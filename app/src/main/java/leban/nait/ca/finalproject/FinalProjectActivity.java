@@ -25,6 +25,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class FinalProjectActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, SensorEventListener {
@@ -35,11 +36,11 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     boolean running = false, finalLap = false, finished = false;
     TextView currentDate, timeElapsed, stepsTaken;
     Calendar c = Calendar.getInstance();
-    String[] theLaps = new String[4];
     Sensor motion;
     SensorManager sManager, stepManager;
-    ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, theLaps);
+    ArrayList laps = new ArrayList();
     ListView lap;
+    double steps;
     Team team = new Team();
     int lapsCount, stepCount;
 
@@ -65,6 +66,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         timeElapsed = (TextView) findViewById(R.id.chronotext);
         stepsTaken = (TextView) findViewById(R.id.stepcount);
         distanceButton = (Button) findViewById(R.id.viewbydistance);
+
         lap = (ListView) findViewById(R.id.laps);
         caloriesButton.setEnabled(false);
         timesButton.setEnabled(false);
@@ -136,7 +138,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         Sensor sensorCount = sManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         if (sensorCount != null) {
             sManager.registerListener(this, sensorCount, SensorManager.SENSOR_DELAY_UI);
-            stepCount++;
+
         } else {
             Toast.makeText(this, "Count sensor cannot run at this time", Toast.LENGTH_LONG).show();
 
@@ -184,11 +186,16 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.passoff: {
                 chrono.stop();
-                long timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
+                double timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
                 team.getRunnerName(lapsCount);
                 team.setRunnerTime(lapsCount, timeElapsed);
+                String lapInfo = team.getRunnerName(lapsCount) + ": " + String.valueOf(team.getRunnerTime(lapsCount));
+                laps.add(lapInfo);
+                ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
+                lap.setAdapter(runnerLaps);
                 lapsCount++;
                 int runnerCount = team.getTeamSize();
+
                 if (lapsCount == runnerCount) {
                     finalLap = true;
                     finishButton.setEnabled(true);
@@ -271,8 +278,10 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (running)
+        if (running) {
             stepsTaken.setText(String.valueOf(stepCount));
+            stepCount++;
+        }
 
     }
 
