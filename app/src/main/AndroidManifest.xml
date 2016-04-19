@@ -4,6 +4,7 @@
 
     <uses-feature android:name="android.hardware.sensor.stepcounter" />
     <uses-feature android:name="android.hardware.sensor.stepdetector" />
+    <uses-feature android:name="android.location.LocationManager" />
 
     <application
         android:allowBackup="true"

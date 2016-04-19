@@ -22,13 +22,13 @@ import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class FinalProjectActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, SensorEventListener {
+    static final String TAG = "Watton";
     DateFormat formatter;
     Chronometer chrono;
     TextClock clock;
@@ -36,7 +36,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     boolean running = false, finalLap = false, finished = false;
     TextView currentDate, timeElapsed, stepsTaken;
     Calendar c = Calendar.getInstance();
-    Sensor motion;
+    Sensor sensorCount, sensorDetector, motion;
     SensorManager sManager, stepManager;
     ArrayList laps = new ArrayList();
     ListView lap;
@@ -51,6 +51,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.content_final_project);
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         stepManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorCount = sManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        sensorDetector = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         motion = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sManager.registerListener(this, motion, SensorManager.SENSOR_DELAY_FASTEST);
         clock = (TextClock) findViewById(R.id.currenttime);
@@ -64,9 +66,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         finishButton = (Button) findViewById(R.id.finishbutton);
         currentDate = (TextView) findViewById(R.id.dateAndTime);
         timeElapsed = (TextView) findViewById(R.id.chronotext);
-        stepsTaken = (TextView) findViewById(R.id.stepcount);
         distanceButton = (Button) findViewById(R.id.viewbydistance);
-
+        stepsTaken = (TextView) findViewById(R.id.stepcount);
         lap = (ListView) findViewById(R.id.laps);
         caloriesButton.setEnabled(false);
         timesButton.setEnabled(false);
@@ -134,16 +135,19 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
-        running = true;
-        Sensor sensorCount = sManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        if (sensorCount != null) {
-            sManager.registerListener(this, sensorCount, SensorManager.SENSOR_DELAY_UI);
-
-        } else {
-            Toast.makeText(this, "Count sensor cannot run at this time", Toast.LENGTH_LONG).show();
-
+        if (running) {
+            sManager.registerListener(this, sensorCount, SensorManager.SENSOR_DELAY_FASTEST);
+            sManager.registerListener(this, sensorDetector, SensorManager.SENSOR_DELAY_FASTEST);
         }
 
+
+
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
 
     }
 
@@ -191,6 +195,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 team.setRunnerTime(lapsCount, timeElapsed);
                 String lapInfo = team.getRunnerName(lapsCount) + ": " + String.valueOf(team.getRunnerTime(lapsCount));
                 laps.add(lapInfo);
+                stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
                 lap.setAdapter(runnerLaps);
                 lapsCount++;
@@ -232,6 +237,13 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 break;
 
 
+            }
+
+            case R.id.resetbutton: {
+                stepCount = 0;
+
+
+                break;
             }
 
             case R.id.viewbytime: {
@@ -279,7 +291,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (running) {
-            stepsTaken.setText(String.valueOf(stepCount));
+            stepsTaken.setText(stepCount);
             stepCount++;
         }
 
