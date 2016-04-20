@@ -209,7 +209,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 lap.setAdapter(runnerLaps);
 
                 int runnerCount = team.getTeamSize();
-
+                lapsCount++;
                 if (lapsCount == runnerCount) {
                     finalLap = true;
                     finishButton.setEnabled(true);
@@ -217,7 +217,6 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 }
 
 
-                lapsCount++;
                 chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
                 startButton.setEnabled(false);
