@@ -41,8 +41,9 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     ArrayList laps = new ArrayList();
     ListView lap;
     double steps;
-    Team team = new Team();
-    int lapsCount, stepCount;
+    Team team;
+    int lapsCount = 1, stepCount;
+    long timeStart = SystemClock.elapsedRealtime();
 
 
     @Override
@@ -55,6 +56,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         sensorDetector = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         motion = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sManager.registerListener(this, motion, SensorManager.SENSOR_DELAY_FASTEST);
+        chrono = (Chronometer) findViewById(R.id.chrono);
         clock = (TextClock) findViewById(R.id.currenttime);
         startButton = (Button) findViewById(R.id.startbutton);
         passButton = (Button) findViewById(R.id.passoff);
@@ -78,6 +80,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         stopButton.setEnabled(false);
         pauseButton.setEnabled(false);
         passButton.setEnabled(false);
+        team = (Team) getIntent().getSerializableExtra("team");
+
 
 
 
@@ -148,6 +152,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onStop() {
         super.onStop();
+        sManager.unregisterListener(this, sensorCount);
+        sManager.unregisterListener(this, sensorDetector);
 
     }
 
@@ -156,15 +162,19 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     {
         switch (v.getId()) {
             case R.id.startbutton: {
+
+                if (!running) {
+
+                    chrono.setBase(SystemClock.elapsedRealtime());
+                    chrono.start();
+                }
                 running = true;
                 startButton.setEnabled(false);
                 stopButton.setEnabled(true);
                 pauseButton.setEnabled(true);
                 passButton.setEnabled(true);
-                if (running) {
-                    chrono.setBase(SystemClock.elapsedRealtime());
-                }
-                chrono.start();
+
+
                 break;
             }
 
@@ -191,8 +201,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
             case R.id.passoff: {
                 chrono.stop();
                 double timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
-                team.getRunnerName(lapsCount);
                 team.setRunnerTime(lapsCount, timeElapsed);
+                team.getRunnerName(lapsCount);
                 String lapInfo = team.getRunnerName(lapsCount) + ": " + String.valueOf(team.getRunnerTime(lapsCount));
                 laps.add(lapInfo);
                 stepsTaken.setText("0");
@@ -225,6 +235,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 team.setRunnerTime(lapsCount, timeElapsed);
                 chrono.setText("00:00");
                 finished = true;
+                stepsTaken.setText(0);
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
                 pauseButton.setEnabled(false);
@@ -290,8 +301,11 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        Sensor sensor = event.sensor;
+
         if (running) {
-            stepsTaken.setText(stepCount);
+            String textStep = String.valueOf(stepCount);
+            stepsTaken.setText(textStep);
             stepCount++;
         }
 

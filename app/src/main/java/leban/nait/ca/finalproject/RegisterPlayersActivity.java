@@ -3,6 +3,7 @@ package leban.nait.ca.finalproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 
 
 public class RegisterPlayersActivity extends Activity implements View.OnClickListener {
+    static final String TAG = "Watton";
     Team team = new Team();
     EditText runner1Name, runner2Name, runner3Name, runner4Name, runner5Name;
     View v;
@@ -46,6 +48,8 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
         Runner realRunner1 = new Runner();
         try {
             realRunner1.setRunnerName(runner1);
+            realRunner1.setRunnerNumber(1);
+            team.addRunner(realRunner1);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -53,6 +57,8 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
         Runner realRunner2 = new Runner();
         try {
             realRunner2.setRunnerName(runner2);
+            realRunner2.setRunnerNumber(2);
+            team.addRunner(realRunner2);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -60,6 +66,8 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
         Runner realRunner3 = new Runner();
         try {
             realRunner3.setRunnerName(runner3);
+            realRunner3.setRunnerNumber(3);
+            team.addRunner(realRunner3);
         } catch (Exception e) {
             e.getMessage();
         }
@@ -68,6 +76,9 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
         Runner realRunner4 = new Runner();
         try {
             realRunner4.setRunnerName(runner4);
+            realRunner4.setRunnerNumber(4);
+            team.addRunner(realRunner4);
+
         } catch (Exception e) {
             e.getMessage();
         }
@@ -75,12 +86,17 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
         Runner realRunner5 = new Runner();
         try {
             realRunner5.setRunnerName(runner5);
+            realRunner5.setRunnerNumber(5);
+            team.addRunner(realRunner5);
         } catch (Exception e) {
             e.getMessage();
         }
 
 
         Intent intent = new Intent(this, FinalProjectActivity.class);
+        intent.putExtra("team", team);
+        Log.d(TAG, team.getRunnerName(1));
+
         this.startActivity(intent);
 
     }

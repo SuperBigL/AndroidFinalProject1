@@ -1,15 +1,17 @@
 package leban.nait.ca.finalproject;
 
+import java.io.Serializable;
+
 /**
  * Created by Owner on 2016-04-15.
  */
-public class Team {
+public class Team implements Serializable {
 
 
-    int teamSize = 2;
+    int teamSize = 0;
     static final int MAXTEAM = 5;
 
-    public Runner[] runners = new Runner[teamSize];
+    public Runner[] runners = new Runner[MAXTEAM];
 
 
     public int getTeamSize() {
@@ -18,8 +20,8 @@ public class Team {
 
     public void addRunner(Runner runner) throws Exception {
         if (teamSize < MAXTEAM) {
+            runners[teamSize] = runner;
             teamSize++;
-            runners[teamSize - 1] = runner;
         } else {
             throw new Exception("No more runners! This team is full!");
         }
@@ -48,6 +50,11 @@ public class Team {
     public void setRunnerSteps(int number, double steps) {
         runners[number].setRunnerSteps(steps);
     }
+
+    //public Team insertPlayers()
+    //{
+
+    //}
 
 
 }

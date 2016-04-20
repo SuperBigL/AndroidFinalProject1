@@ -1,9 +1,11 @@
 package leban.nait.ca.finalproject;
 
+import java.io.Serializable;
+
 /**
  * Created by Owner on 2016-04-15.
  */
-public class Runner {
+public class Runner implements Serializable {
 
 
     private int runnerNumber;
@@ -32,7 +34,7 @@ public class Runner {
         if (runnerName == null) {
             runnerName = null;
             runnerNumber = 0;
-            runnerTime = 00;
+            runnerTime = 0;
         }
 
 

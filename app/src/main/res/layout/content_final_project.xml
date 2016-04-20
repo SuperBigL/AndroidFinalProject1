@@ -73,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pausebutton"
-        android:text="Pause Button"
+        android:text="Pause"
         android:layout_toRightOf="@id/resetbutton"
         android:onClick="onClick"
         android:layout_below="@id/chrono" />
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/passoff"
-        android:text="Pass off the Batton"
+        android:text="Pass"
         android:layout_below="@id/startbutton"
         android:onClick="onClick" />
 
@@ -117,7 +117,7 @@
         android:layout_below="@id/countlabel"
         android:id="@+id/resultstext"
         android:textAlignment="gravity"
-        android:paddingTop="100dp" />
+        android:paddingTop="50dp" />
 
 
     <Button
