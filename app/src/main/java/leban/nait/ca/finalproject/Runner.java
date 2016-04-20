@@ -10,7 +10,7 @@ public class Runner implements Serializable {
 
     private int runnerNumber;
     private String runnerName;
-    private double runnerSteps;
+    private int runnerSteps;
 
     private double runnerTime;
 
@@ -53,7 +53,7 @@ public class Runner implements Serializable {
     }
 
 
-    public void setRunnerSteps(double runnerSteps) {
+    public void setRunnerSteps(int runnerSteps) {
         this.runnerSteps = runnerSteps;
     }
 

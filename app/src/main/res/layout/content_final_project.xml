@@ -61,13 +61,7 @@
         android:onClick="onClick"
         android:layout_below="@id/chrono"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stopbutton"
-        android:text="Stop"
-        android:onClick="onClick"
-        android:layout_below="@id/startbutton" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -76,6 +70,15 @@
         android:text="Pause"
         android:layout_toRightOf="@id/resetbutton"
         android:onClick="onClick"
+        android:layout_below="@id/chrono" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stopbutton"
+        android:text="Stop"
+        android:onClick="onClick"
+        android:layout_toRightOf="@id/pausebutton"
         android:layout_below="@id/chrono" />
 
     <Button

@@ -203,11 +203,11 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 team.setRunnerTime(lapsCount, timeElapsed);
                 team.getRunnerName(lapsCount - 1);
                 String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount) / 1000);
+                team.setRunnerSteps(lapsCount, stepCount);
                 laps.add(lapInfo);
                 stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
                 lap.setAdapter(runnerLaps);
-
                 int runnerCount = team.getTeamSize();
                 lapsCount++;
                 if (lapsCount == runnerCount) {
@@ -229,11 +229,15 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.finishbutton: {
                 chrono.stop();
-                running = false;
-                long timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
-                team.getRunnerName(lapsCount);
+                double timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
                 team.setRunnerTime(lapsCount, timeElapsed);
-                chrono.setText("00:00");
+                team.getRunnerName(lapsCount - 1);
+                String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount) / 1000);
+                team.setRunnerSteps(lapsCount, stepCount);
+                laps.add(lapInfo);
+                stepsTaken.setText("0");
+                ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
+                lap.setAdapter(runnerLaps);
 
                 finished = true;
                 stepsTaken.setText("0");

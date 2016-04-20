@@ -22,6 +22,8 @@ public class Team implements Serializable {
         if (teamSize < MAXTEAM) {
             runners[teamSize] = runner;
             teamSize++;
+
+
         } else {
             throw new Exception("No more runners! This team is full!");
         }
@@ -47,7 +49,7 @@ public class Team implements Serializable {
         return runners[number].getRunnerSteps();
     }
 
-    public void setRunnerSteps(int number, double steps) {
+    public void setRunnerSteps(int number, int steps) {
         runners[number].setRunnerSteps(steps);
     }
 
