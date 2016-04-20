@@ -116,25 +116,14 @@
         android:text="Results by"
         android:layout_below="@id/countlabel"
         android:id="@+id/resultstext"
-        android:textAlignment="gravity"
-        android:paddingTop="50dp" />
+        android:textAlignment="gravity" />
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewbycalories"
-        android:text="Calories"
-        android:layout_below="@id/resultstext"
-        android:layout_toRightOf="@id/viewbycalories"
-        android:onClick="onClick" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/viewbytime"
         android:text="Time"
-        android:layout_toRightOf="@id/viewbycalories"
         android:layout_below="@id/resultstext"
         android:onClick="onClick" />
 
@@ -153,15 +142,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/teamsetup"
         android:text="Team Setup"
-        android:layout_below="@id/viewbysteps" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewbydistance"
-        android:text="Distance"
-        android:layout_toRightOf="@id/viewbysteps"
-        android:layout_below="@id/resultstext" />
+        android:layout_toRightOf="@id/viewbysteps" />
 
 
     <TextView

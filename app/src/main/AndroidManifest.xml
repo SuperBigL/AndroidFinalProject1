@@ -23,8 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".FinalProjectActivity" />
-        <activity android:name=".CaloriesGraph" />
-        <activity android:name=".DistanceGraph" />
         <activity android:name=".StepsGraph" />
         <activity android:name=".TimesGraph" />
     </application>

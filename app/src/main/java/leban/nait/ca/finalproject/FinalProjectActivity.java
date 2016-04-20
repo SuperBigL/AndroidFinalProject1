@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +33,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     DateFormat formatter;
     Chronometer chrono;
     TextClock clock;
-    Button startButton, passButton, pauseButton, stopButton, caloriesButton, timesButton, stepsButton, finishButton, distanceButton;
+    Button startButton, passButton, pauseButton, stopButton, timesButton, stepsButton, finishButton;
     boolean running = false, finalLap = false, finished = false;
     TextView currentDate, timeElapsed, stepsTaken;
     Calendar c = Calendar.getInstance();
@@ -62,25 +63,23 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         passButton = (Button) findViewById(R.id.passoff);
         pauseButton = (Button) findViewById(R.id.pausebutton);
         stopButton = (Button) findViewById(R.id.stopbutton);
-        caloriesButton = (Button) findViewById(R.id.viewbycalories);
+
         timesButton = (Button) findViewById(R.id.viewbytime);
         stepsButton = (Button) findViewById(R.id.viewbysteps);
         finishButton = (Button) findViewById(R.id.finishbutton);
         currentDate = (TextView) findViewById(R.id.dateAndTime);
         timeElapsed = (TextView) findViewById(R.id.chronotext);
-        distanceButton = (Button) findViewById(R.id.viewbydistance);
         stepsTaken = (TextView) findViewById(R.id.stepcount);
         lap = (ListView) findViewById(R.id.laps);
-        caloriesButton.setEnabled(false);
         timesButton.setEnabled(false);
         stepsButton.setEnabled(false);
-        distanceButton.setEnabled(false);
         finishButton.setEnabled(false);
         stepsTaken.setText("0");
         stopButton.setEnabled(false);
         pauseButton.setEnabled(false);
         passButton.setEnabled(false);
         team = (Team) getIntent().getSerializableExtra("team");
+        Log.d(TAG, "Done creating stopwatch");
 
 
 
@@ -202,13 +201,13 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 chrono.stop();
                 double timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
                 team.setRunnerTime(lapsCount, timeElapsed);
-                team.getRunnerName(lapsCount);
-                String lapInfo = team.getRunnerName(lapsCount) + ": " + String.valueOf(team.getRunnerTime(lapsCount));
+                team.getRunnerName(lapsCount - 1);
+                String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount) / 1000);
                 laps.add(lapInfo);
                 stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
                 lap.setAdapter(runnerLaps);
-                lapsCount++;
+
                 int runnerCount = team.getTeamSize();
 
                 if (lapsCount == runnerCount) {
@@ -218,7 +217,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 }
 
 
-                chrono.setText("00:00");
+                lapsCount++;
+                chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
                 startButton.setEnabled(false);
                 stopButton.setEnabled(true);
@@ -230,30 +230,30 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.finishbutton: {
                 chrono.stop();
+                running = false;
                 long timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
                 team.getRunnerName(lapsCount);
                 team.setRunnerTime(lapsCount, timeElapsed);
                 chrono.setText("00:00");
+
                 finished = true;
-                stepsTaken.setText(0);
+                stepsTaken.setText("0");
                 startButton.setEnabled(true);
                 stopButton.setEnabled(false);
                 pauseButton.setEnabled(false);
                 passButton.setEnabled(false);
                 finishButton.setEnabled(false);
                 stepsButton.setEnabled(true);
-                caloriesButton.setEnabled(true);
                 timesButton.setEnabled(true);
-                distanceButton.setEnabled(true);
                 break;
 
 
             }
 
             case R.id.resetbutton: {
+                chrono.setBase(SystemClock.elapsedRealtime());
+                chrono.start();
                 stepCount = 0;
-
-
                 break;
             }
 
@@ -263,24 +263,12 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 break;
             }
 
-            case R.id.viewbydistance: {
-                Intent intent = new Intent(this, DistanceGraph.class);
-                this.startActivity(intent);
-                break;
-            }
 
             case R.id.viewbysteps: {
                 Intent intent = new Intent(this, StepsGraph.class);
                 this.startActivity(intent);
                 break;
             }
-
-            case R.id.viewbycalories: {
-                Intent intent = new Intent(this, CaloriesGraph.class);
-                this.startActivity(intent);
-                break;
-            }
-
 
 
         }
