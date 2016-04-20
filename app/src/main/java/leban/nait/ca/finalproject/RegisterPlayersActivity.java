@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Leban Abduallahi Mohamed on 2016-04-15.
@@ -45,59 +46,83 @@ public class RegisterPlayersActivity extends Activity implements View.OnClickLis
         runner4 = runner4Name.getText().toString();
         runner5 = runner5Name.getText().toString();
 
-        Runner realRunner1 = new Runner();
-        try {
-            realRunner1.setRunnerName(runner1);
-            realRunner1.setRunnerNumber(1);
-            team.addRunner(realRunner1);
-        } catch (Exception e) {
-            e.getMessage();
+        if (runner1.isEmpty() || runner2.isEmpty()) {
+            Toast.makeText(this, "You cannot make this null! Insert at least 2 players in the appropriate fields.", Toast.LENGTH_LONG).show();
+        } else {
+            Runner realRunner1 = new Runner();
+            try {
+
+                realRunner1.setRunnerName(runner1);
+                realRunner1.setRunnerNumber(1);
+                team.addRunner(realRunner1);
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+            Runner realRunner2 = new Runner();
+
+            try {
+
+
+                realRunner2.setRunnerName(runner2);
+                realRunner2.setRunnerNumber(2);
+                team.addRunner(realRunner2);
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+            Runner realRunner3 = new Runner();
+            try {
+                if (runner3.isEmpty()) {
+
+                } else {
+                    realRunner3.setRunnerName(runner3);
+                    realRunner3.setRunnerNumber(3);
+                    team.addRunner(realRunner3);
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+
+            Runner realRunner4 = new Runner();
+            try {
+                if (runner4.isEmpty()) {
+
+                } else {
+                    realRunner4.setRunnerName(runner4);
+                    realRunner4.setRunnerNumber(4);
+                    team.addRunner(realRunner4);
+                }
+
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+            Runner realRunner5 = new Runner();
+            try {
+                if (runner5.isEmpty()) {
+
+                } else {
+                    realRunner5.setRunnerName(runner5);
+                    realRunner5.setRunnerNumber(5);
+                    team.addRunner(realRunner5);
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+
+
+            Intent intent = new Intent(this, FinalProjectActivity.class);
+            intent.putExtra("team", team);
+            Log.d(TAG, team.getRunnerName(1));
+
+            this.startActivity(intent);
+
+
         }
 
-        Runner realRunner2 = new Runner();
-        try {
-            realRunner2.setRunnerName(runner2);
-            realRunner2.setRunnerNumber(2);
-            team.addRunner(realRunner2);
-        } catch (Exception e) {
-            e.getMessage();
-        }
 
-        Runner realRunner3 = new Runner();
-        try {
-            realRunner3.setRunnerName(runner3);
-            realRunner3.setRunnerNumber(3);
-            team.addRunner(realRunner3);
-        } catch (Exception e) {
-            e.getMessage();
-        }
-
-
-        Runner realRunner4 = new Runner();
-        try {
-            realRunner4.setRunnerName(runner4);
-            realRunner4.setRunnerNumber(4);
-            team.addRunner(realRunner4);
-
-        } catch (Exception e) {
-            e.getMessage();
-        }
-
-        Runner realRunner5 = new Runner();
-        try {
-            realRunner5.setRunnerName(runner5);
-            realRunner5.setRunnerNumber(5);
-            team.addRunner(realRunner5);
-        } catch (Exception e) {
-            e.getMessage();
-        }
-
-
-        Intent intent = new Intent(this, FinalProjectActivity.class);
-        intent.putExtra("team", team);
-        Log.d(TAG, team.getRunnerName(1));
-
-        this.startActivity(intent);
 
     }
 }
