@@ -33,7 +33,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     DateFormat formatter;
     Chronometer chrono;
     TextClock clock;
-    Button startButton, passButton, pauseButton, stopButton, timesButton, stepsButton, finishButton;
+    Button startButton, passButton, pauseButton, stopButton, timesButton, stepsButton, finishButton, setupButton, clearButton;
     boolean running = false, finalLap = false, finished = false;
     TextView currentDate, timeElapsed, stepsTaken;
     Calendar c = Calendar.getInstance();
@@ -63,7 +63,8 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         passButton = (Button) findViewById(R.id.passoff);
         pauseButton = (Button) findViewById(R.id.pausebutton);
         stopButton = (Button) findViewById(R.id.stopbutton);
-
+        setupButton = (Button) findViewById(R.id.teamsetup);
+        clearButton = (Button) findViewById(R.id.clearallbutton);
         timesButton = (Button) findViewById(R.id.viewbytime);
         stepsButton = (Button) findViewById(R.id.viewbysteps);
         finishButton = (Button) findViewById(R.id.finishbutton);
@@ -187,6 +188,22 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
             }
 
+            case R.id.clearallbutton: {
+                chrono.stop();
+                laps.clear();
+                if (running) {
+                    running = false;
+                    startButton.setEnabled(true);
+                    stopButton.setEnabled(false);
+                    pauseButton.setEnabled(false);
+                    passButton.setEnabled(false);
+                    finishButton.setEnabled(false);
+                    timesButton.setEnabled(false);
+                    stepsButton.setEnabled(false);
+                }
+                break;
+            }
+
             case R.id.stopbutton: {
                 running = false;
                 startButton.setEnabled(true);
@@ -205,6 +222,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount - 1) / 1000);
                 team.setRunnerSteps(lapsCount - 1, stepCount);
                 laps.add(lapInfo);
+                stepCount = 0;
                 stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
                 lap.setAdapter(runnerLaps);
@@ -262,7 +280,6 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                     passButton.setEnabled(false);
                     finishButton.setEnabled(true);
                 }
-                laps.clear();
                 break;
             }
 

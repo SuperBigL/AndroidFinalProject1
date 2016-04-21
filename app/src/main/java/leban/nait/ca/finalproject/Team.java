@@ -20,8 +20,12 @@ public class Team implements Serializable {
 
     public void addRunner(Runner runner) throws Exception {
         if (teamSize < MAXTEAM) {
-            runners[teamSize] = runner;
-            teamSize++;
+            if (runner.getRunnerName() == "") {
+
+            } else {
+                runners[teamSize] = runner;
+                teamSize++;
+            }
 
 
         } else {
