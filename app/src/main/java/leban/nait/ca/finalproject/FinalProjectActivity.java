@@ -200,10 +200,10 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
             case R.id.passoff: {
                 chrono.stop();
                 double timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
-                team.setRunnerTime(lapsCount, timeElapsed);
+                team.setRunnerTime(lapsCount - 1, timeElapsed);
                 team.getRunnerName(lapsCount - 1);
-                String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount) / 1000);
-                team.setRunnerSteps(lapsCount, stepCount);
+                String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount - 1) / 1000);
+                team.setRunnerSteps(lapsCount - 1, stepCount);
                 laps.add(lapInfo);
                 stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
@@ -229,11 +229,12 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.finishbutton: {
                 chrono.stop();
+                running = false;
                 double timeElapsed = SystemClock.elapsedRealtime() - chrono.getBase();
-                team.setRunnerTime(lapsCount, timeElapsed);
+                team.setRunnerTime(lapsCount - 1, timeElapsed);
                 team.getRunnerName(lapsCount - 1);
-                String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount) / 1000);
-                team.setRunnerSteps(lapsCount, stepCount);
+                String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount - 1) / 1000);
+                team.setRunnerSteps(lapsCount - 1, stepCount);
                 laps.add(lapInfo);
                 stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
@@ -257,11 +258,17 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
                 stepCount = 0;
+                if (running) {
+                    passButton.setEnabled(false);
+                    finishButton.setEnabled(true);
+                }
+                laps.clear();
                 break;
             }
 
             case R.id.viewbytime: {
                 Intent intent = new Intent(this, TimesGraph.class);
+                intent.putExtra("team", team);
                 this.startActivity(intent);
                 break;
             }
@@ -269,6 +276,13 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.viewbysteps: {
                 Intent intent = new Intent(this, StepsGraph.class);
+                intent.putExtra("team", team);
+                this.startActivity(intent);
+                break;
+            }
+            case R.id.teamsetup: {
+                Intent intent = new Intent(this, RegisterPlayersActivity.class);
+                intent.putExtra("team", team);
                 this.startActivity(intent);
                 break;
             }
