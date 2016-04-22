@@ -36,7 +36,7 @@ public class TimesGraph extends Activity {
         DataPoint[] points = new DataPoint[lapCount];
         for (int i = 0; i < lapCount; i++) {
             Log.d(TAG, "Entering the player's stats....");
-            teamList.add(new BarGraphSeries<DataPoint>(new DataPoint[]{new DataPoint(i + 1, team.getRunnerTime(i))}));
+            teamList.add(new BarGraphSeries<DataPoint>(new DataPoint[]{new DataPoint(i + 1, team.getRunnerTime(i) / 1000)}));
             (teamList.get(i)).setTitle(team.getRunnerName(i));
             timesGraph.addSeries(teamList.get(i));
             teamList.get(i).setSpacing(35);
