@@ -53,7 +53,9 @@ public class TimesGraph extends Activity {
         }
         timesGraph.getViewport().setMinX(-1);
         timesGraph.getViewport().setMaxX(8);
+        timesGraph.getViewport().setMinY(0);
         timesGraph.getViewport().setXAxisBoundsManual(true);
+        timesGraph.getViewport().setYAxisBoundsManual(true);
 
 
 

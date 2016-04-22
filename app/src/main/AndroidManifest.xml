@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="leban.nait.ca.finalproject">
 
-    <uses-feature android:name="android.hardware.sensor.stepcounter" />
-    <uses-feature android:name="android.hardware.sensor.stepdetector" />
     <uses-feature android:name="android.location.LocationManager" />
 
     <application
@@ -23,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".FinalProjectActivity" />
-        <activity android:name=".StepsGraph" />
         <activity android:name=".TimesGraph" />
     </application>
 

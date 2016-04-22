@@ -10,7 +10,6 @@ public class Runner implements Serializable {
 
     private int runnerNumber;
     private String runnerName;
-    private int runnerSteps;
 
     private double runnerTime;
 
@@ -48,14 +47,7 @@ public class Runner implements Serializable {
         this.runnerTime = runnerTime;
     }
 
-    public double getRunnerSteps() {
-        return runnerSteps;
-    }
 
-
-    public void setRunnerSteps(int runnerSteps) {
-        this.runnerSteps = runnerSteps;
-    }
 
 
 }

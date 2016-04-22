@@ -49,18 +49,8 @@ public class Team implements Serializable {
 
     }
 
-    public double getRunnerSteps(int number) {
-        return runners[number].getRunnerSteps();
-    }
 
-    public void setRunnerSteps(int number, int steps) {
-        runners[number].setRunnerSteps(steps);
-    }
 
-    //public Team insertPlayers()
-    //{
-
-    //}
 
 
 }

@@ -1,12 +1,6 @@
 package leban.nait.ca.finalproject;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -18,45 +12,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
-public class FinalProjectActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener, SensorEventListener {
+public class FinalProjectActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     static final String TAG = "Watton";
-    DateFormat formatter;
     Chronometer chrono;
     TextClock clock;
-    Button startButton, passButton, pauseButton, stopButton, timesButton, stepsButton, finishButton, setupButton, clearButton;
+    Button startButton, passButton, pauseButton, stopButton, timesButton, finishButton, setupButton, clearButton, resetButton;
     boolean running = false, finalLap = false, finished = false;
-    TextView currentDate, timeElapsed, stepsTaken;
-    Calendar c = Calendar.getInstance();
-    Sensor sensorCount, sensorDetector, motion;
-    SensorManager sManager, stepManager;
+    TextView currentDate, timeElapsed;
     ArrayList laps = new ArrayList();
     ListView lap;
-    double steps;
     Team team;
-    int lapsCount = 1, stepCount;
-    long timeStart = SystemClock.elapsedRealtime();
+    int lapsCount = 1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_final_project);
-        sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        stepManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorCount = sManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        sensorDetector = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        motion = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sManager.registerListener(this, motion, SensorManager.SENSOR_DELAY_FASTEST);
+
         chrono = (Chronometer) findViewById(R.id.chrono);
         clock = (TextClock) findViewById(R.id.currenttime);
         startButton = (Button) findViewById(R.id.startbutton);
@@ -64,18 +43,15 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
         pauseButton = (Button) findViewById(R.id.pausebutton);
         stopButton = (Button) findViewById(R.id.stopbutton);
         setupButton = (Button) findViewById(R.id.teamsetup);
+        resetButton = (Button) findViewById(R.id.resetbutton);
         clearButton = (Button) findViewById(R.id.clearallbutton);
         timesButton = (Button) findViewById(R.id.viewbytime);
-        stepsButton = (Button) findViewById(R.id.viewbysteps);
         finishButton = (Button) findViewById(R.id.finishbutton);
         currentDate = (TextView) findViewById(R.id.dateAndTime);
         timeElapsed = (TextView) findViewById(R.id.chronotext);
-        stepsTaken = (TextView) findViewById(R.id.stepcount);
         lap = (ListView) findViewById(R.id.laps);
         timesButton.setEnabled(false);
-        stepsButton.setEnabled(false);
         finishButton.setEnabled(false);
-        stepsTaken.setText("0");
         stopButton.setEnabled(false);
         pauseButton.setEnabled(false);
         passButton.setEnabled(false);
@@ -89,29 +65,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    private void updateLabel() {
-        currentDate.setText(formatter.format(c.getTime()));
-    }
 
-
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            c.set(Calendar.YEAR, year);
-            c.set(Calendar.MONTH, monthOfYear);
-            c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-        }
-    };
-
-
-    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            c.set(Calendar.MINUTE, minute);
-            updateLabel();
-        }
-    };
 
 
     @Override
@@ -139,21 +93,13 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
-        if (running) {
-            sManager.registerListener(this, sensorCount, SensorManager.SENSOR_DELAY_FASTEST);
-            sManager.registerListener(this, sensorDetector, SensorManager.SENSOR_DELAY_FASTEST);
-        }
-
-
-
     }
 
 
     @Override
     protected void onStop() {
         super.onStop();
-        sManager.unregisterListener(this, sensorCount);
-        sManager.unregisterListener(this, sensorDetector);
+        running = false;
 
     }
 
@@ -173,6 +119,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 stopButton.setEnabled(true);
                 pauseButton.setEnabled(true);
                 passButton.setEnabled(true);
+                resetButton.setEnabled(true);
 
 
                 break;
@@ -189,18 +136,22 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
             }
 
             case R.id.clearallbutton: {
+                chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.stop();
                 laps.clear();
+                ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
+                lap.setAdapter(runnerLaps);
+                lapsCount = 1;
                 if (running) {
                     running = false;
+                }
                     startButton.setEnabled(true);
                     stopButton.setEnabled(false);
                     pauseButton.setEnabled(false);
                     passButton.setEnabled(false);
                     finishButton.setEnabled(false);
                     timesButton.setEnabled(false);
-                    stepsButton.setEnabled(false);
-                }
+
                 break;
             }
 
@@ -220,10 +171,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 team.setRunnerTime(lapsCount - 1, timeElapsed);
                 team.getRunnerName(lapsCount - 1);
                 String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount - 1) / 1000);
-                team.setRunnerSteps(lapsCount - 1, stepCount);
                 laps.add(lapInfo);
-                stepCount = 0;
-                stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
                 lap.setAdapter(runnerLaps);
                 int runnerCount = team.getTeamSize();
@@ -252,21 +200,19 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
                 team.setRunnerTime(lapsCount - 1, timeElapsed);
                 team.getRunnerName(lapsCount - 1);
                 String lapInfo = team.getRunnerName(lapsCount - 1) + ": " + String.valueOf(team.getRunnerTime(lapsCount - 1) / 1000);
-                team.setRunnerSteps(lapsCount - 1, stepCount);
                 laps.add(lapInfo);
-                stepsTaken.setText("0");
                 ArrayAdapter<String> runnerLaps = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, laps);
                 lap.setAdapter(runnerLaps);
 
                 finished = true;
-                stepsTaken.setText("0");
-                startButton.setEnabled(true);
+                resetButton.setEnabled(false);
+                startButton.setEnabled(false);
                 stopButton.setEnabled(false);
                 pauseButton.setEnabled(false);
                 passButton.setEnabled(false);
                 finishButton.setEnabled(false);
-                stepsButton.setEnabled(true);
                 timesButton.setEnabled(true);
+
                 break;
 
 
@@ -275,7 +221,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
             case R.id.resetbutton: {
                 chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
-                stepCount = 0;
+                lapsCount = 0;
                 if (running) {
                     passButton.setEnabled(false);
                     finishButton.setEnabled(true);
@@ -291,12 +237,6 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
             }
 
 
-            case R.id.viewbysteps: {
-                Intent intent = new Intent(this, StepsGraph.class);
-                intent.putExtra("team", team);
-                this.startActivity(intent);
-                break;
-            }
             case R.id.teamsetup: {
                 Intent intent = new Intent(this, RegisterPlayersActivity.class);
                 intent.putExtra("team", team);
@@ -321,20 +261,5 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        Sensor sensor = event.sensor;
 
-        if (running) {
-            String textStep = String.valueOf(stepCount);
-            stepsTaken.setText(textStep);
-            stepCount++;
-        }
-
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
 }

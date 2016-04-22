@@ -61,14 +61,7 @@
         android:onClick="onClick"
         android:layout_below="@id/chrono"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/clearallbutton"
-        android:text="Clear"
-        android:layout_toRightOf="@id/finishbutton"
-        android:layout_below="@id/startbutton"
-        android:onClick="onClick" />
+
 
 
     <Button
@@ -106,29 +99,16 @@
         android:layout_below="@id/startbutton"
         android:onClick="onClick" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Steps Taken: "
-        android:id="@+id/countlabel"
-        android:layout_below="@id/passoff" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stepcount"
-        android:layout_toRightOf="@id/countlabel"
-        android:layout_below="@id/passoff"
-        android:text="0" />
+        android:id="@+id/clearallbutton"
+        android:text="Clear"
+        android:layout_toRightOf="@id/finishbutton"
+        android:layout_below="@id/startbutton"
+        android:onClick="onClick" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Results by"
-        android:layout_below="@id/countlabel"
-        android:id="@+id/resultstext"
-        android:textAlignment="gravity" />
 
 
     <Button
@@ -136,26 +116,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/viewbytime"
         android:text="Time"
-        android:layout_below="@id/resultstext"
+        android:layout_below="@id/passoff"
         android:onClick="onClick" />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewbysteps"
-        android:text="Steps Made"
-        android:layout_toRightOf="@id/viewbytime"
-        android:layout_below="@id/resultstext"
-        android:onClick="onClick" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/teamsetup"
         android:text="Team"
-        android:layout_toRightOf="@id/viewbysteps"
-        android:layout_below="@id/resultstext"
+        android:layout_below="@id/passoff"
+        android:layout_toRightOf="@id/viewbytime"
         android:onClick="onClick" />
 
 
