@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/chrono"
         android:paddingTop="50dp"
-        android:layout_below="@id/chronotext"/>
+        android:layout_below="@id/chronotext"
+        android:textSize="200px" />
 
 
 
@@ -79,8 +80,8 @@
         android:id="@+id/stopbutton"
         android:text="Stop"
         android:onClick="onClick"
-        android:layout_toRightOf="@id/pausebutton"
-        android:layout_below="@id/chrono" />
+        android:layout_below="@+id/finishbutton"
+        android:layout_toEndOf="@+id/finishbutton" />
 
     <Button
         android:layout_width="wrap_content"

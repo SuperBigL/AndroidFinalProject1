@@ -249,6 +249,7 @@ public class FinalProjectActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
     {
